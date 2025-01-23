@@ -1,1 +1,1 @@
-# EC530
+# EC530 Assignment 1
