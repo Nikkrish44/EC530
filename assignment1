@@ -1,0 +1,24 @@
+from math import radians, sin, cos, sqrt, atan2
+
+def match_closest_points(points1, points2):
+  
+    def haversine(lat1, lon1, lat2, lon2):
+        R = 6371.0  # Earth's radius in km
+        dlat, dlon = radians(lat2 - lat1), radians(lon2 - lon1)
+        a = sin(dlat / 2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2)**2
+        return 2 * R * atan2(sqrt(a), sqrt(1 - a))
+
+    results = []
+    for lat1, lon1 in points1:
+        closest_point = points2[0]
+        min_distance = haversine(lat1, lon1, closest_point[0], closest_point[1])
+        
+        for lat2, lon2 in points2[1:]:
+            distance = haversine(lat1, lon1, lat2, lon2)
+            if distance < min_distance:
+                min_distance = distance
+                closest_point = (lat2, lon2)
+        
+        results.append(closest_point)
+    
+    return results
